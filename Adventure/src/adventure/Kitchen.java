@@ -20,7 +20,7 @@ public class Kitchen extends Room
 	 * 
 	 */
 
-	public static final WorldDimension  	DEFAULT_KITCHEN_DIMENSION	= new WorldDimension(4, 2, 1);		// In Locations
+	public static final WorldDimension  	DEFAULT_KITCHEN_DIMENSION	= new WorldDimension((short)(4), (short)(2));		// In Locations
 	
 	private final int						DEFAULT_KITCHEN_SINKS		= 1;
 	private final int						DEFAULT_KITCHEN_STOVES		= 1;

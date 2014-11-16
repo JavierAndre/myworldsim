@@ -18,7 +18,7 @@ public class Bathroom extends Room
 	 * 
 	 */
 
-	public static 	final WorldDimension  	DEFAULT_BATHROOM_DIMENSION	= new WorldDimension(1, 1, 1);		// In Locations
+	public static 	final WorldDimension  	DEFAULT_BATHROOM_DIMENSION	= new WorldDimension((short)(1), (short)(1));		// In Locations
 	
 	private final 	int						DEFAULT_BATHROOM_SINKS		= 1;
 	private final 	int						DEFAULT_BATHROOM_SHOWERS	= 1;

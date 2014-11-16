@@ -7,11 +7,10 @@ public class Location
 	 * 
 	 */
 	
-	private WorldLocation	location;				// Where it is: world location coordinates: X, X, Z
-	private WorldDimension	locationDimension;		// How big it is: size in cubic feet expressed as width x length (depth) x height
+	private WorldLocation	location;				// Where it is: world location coordinates: x, y, z
+	private WorldDimension	locationDimension;		// How big it is: size in cubic feet expressed as width x length x height
 	private LocationTypes	locationType;			// Initially, when a Location is created it is a World-type Location
 	private String			locationDescription;	// Initially, when a Location is created it is described as a World-type Location
-	private boolean			locationBuilt;			// Indicates whether or not some structure has already been built on this Location
 	private Exit[]			locationExits;			// One-way exits: inside direction is NOWHERE, such as Emergency Exits
 	
 	/*
@@ -25,6 +24,25 @@ public class Location
 	 * Consructor Methods
 	 * 
 	 */
+
+	public Location()
+	{
+		// A Location is nowhere if its WorldLocation is NOWHERE (-1, -1)
+		
+		location 			= new WorldLocation(WorldLocation.NOWHERE, WorldLocation.NOWHERE);
+		locationDimension 	= new WorldDimension((short)(0), (short)(0));
+		locationType		= LocationTypes.NOWHERE;
+		locationDescription	= "Nowhere";
+		locationExits 	  	= new Exit[Direction.values().length];
+		
+		for (int exit = 0; exit < Direction.values().length; exit++)
+		{
+			for (Direction dir : Direction.values())
+			{
+				locationExits[exit] = new Exit(dir, null);
+			}
+		}
+	}
 	
 	public Location(WorldLocation loc, WorldDimension dimension, String description, LocationTypes type)
 	{
@@ -32,8 +50,7 @@ public class Location
 		locationDimension 	= dimension;
 		locationDescription = description;
 		locationType		= type;
-		locationBuilt		= false;
-		locationExits 	  	= new Exit[Direction.values().length];		// The Location Exits are created in the AdventureWorld class
+		locationExits 	  	= new Exit[Direction.values().length];		// The Location Exits are created in the World class
 	}
 
 	/*
@@ -41,7 +58,7 @@ public class Location
 	 * 
 	 */
 
-	public WorldLocation getWorldLocation()
+	public WorldLocation getLocation()
 	{
 		return location;
 	}
@@ -61,9 +78,9 @@ public class Location
 		return locationType;
 	}
 	
-	public Exit getExit(Direction direction)
+	public Exit getExit(int exit)
 	{
-		return locationExits[direction.ordinal() - 1];
+		return locationExits[exit];
 	}
 	
 	/*
@@ -93,7 +110,6 @@ public class Location
 	
 	public void build(LocationTypes type)
 	{
-		locationType	= type;
-		locationBuilt 	= true;
+		locationType = type;
 	}
 }

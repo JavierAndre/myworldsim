@@ -14,7 +14,7 @@ public class Bedroom extends Room
 	 * 
 	 */
 	
-	public static final WorldDimension	DEFAULT_BEDROOM_DIMENSION = new WorldDimension(2, 2, 1);		// In Locations
+	public static final WorldDimension	DEFAULT_BEDROOM_DIMENSION = new WorldDimension((short)(2), (short)(2));		// In Locations
 	
 	
 	/*

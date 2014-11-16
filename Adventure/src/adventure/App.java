@@ -1,11 +1,11 @@
 package adventure;
 
-public class AdventureApp
+public class App
 {
 	public static void main(String[] args)
 	{
 		// Create the World
 		
-		AdventureWorld world = new AdventureWorld();
+		World world = new World();
 	}
 }

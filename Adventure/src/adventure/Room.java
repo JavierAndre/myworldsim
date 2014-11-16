@@ -16,7 +16,7 @@ public class Room extends Location
 	 * 
 	 */
 	
-	public static final WorldDimension	DEFAULT_ROOM_DIMENSION				= new WorldDimension(1, 1, 1);		// In Locations
+	public static final WorldDimension	DEFAULT_ROOM_DIMENSION				= new WorldDimension((short)(1), (short)(1));		// In Locations
 	public static final String			DEFAULT_ROOM_DESCRIPTION			= "This is a confy room for your creatures to use!";
 	public static final int				DEFAULT_ROOM_WINDOWS				= 1;
 	

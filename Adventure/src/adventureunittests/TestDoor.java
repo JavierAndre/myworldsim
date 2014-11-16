@@ -8,7 +8,7 @@ import adventure.WorldDimension;
 import adventure.WorldLocation;
 import adventure.DoorKey;
 import adventure.Exit;
-import adventure.AdventureWorld;
+import adventure.World;
 
 public class TestDoor
 {
@@ -26,16 +26,16 @@ public class TestDoor
 	
 	public TestDoor(int hardwareType, int insideLockType, int outsideLockType)
 	{
-		WorldLocation doorLocation	 	= new WorldLocation(0,1,0);		// x:width,y:height,z:length/depth
-		WorldDimension doorDimension 	= new WorldDimension(3,1,8);
+		WorldLocation doorLocation	 	= new WorldLocation((short)(0), (short)(1));		// x:width, y:length, z:level
+		WorldDimension doorDimension 	= new WorldDimension((short)(3), (short)(8));
 
 		Location location				= new Location(doorLocation, doorDimension, "Front Door", LocationTypes.DOOR);
 		
-		WorldLocation enterCoordinates	= new WorldLocation(2,1,0);
-		Location enterLocation 		 	= new Location(enterCoordinates, AdventureWorld.WORLD_LOCATION_DIMENSION, "entrance hall", LocationTypes.HALLWAY);
+		WorldLocation enterCoordinates	= new WorldLocation((short)(2),(short)(1));
+		Location enterLocation 		 	= new Location(enterCoordinates, World.WORLD_LOCATION_DIMENSION, "entrance hall", LocationTypes.HALLWAY);
 		
-		WorldLocation exitCoordinates 	= new WorldLocation(0,1,0);
-		Location exitLocation 		 	= new Location(exitCoordinates, AdventureWorld.WORLD_LOCATION_DIMENSION, "entrance", LocationTypes.ENTRANCE);
+		WorldLocation exitCoordinates 	= new WorldLocation((short)(0),(short)(1));
+		Location exitLocation 		 	= new Location(exitCoordinates, World.WORLD_LOCATION_DIMENSION, "entrance", LocationTypes.ENTRANCE);
 		
 		Exit enter 						= new Exit(Direction.NORTH, enterLocation);
 		Exit exit 						= new Exit(Direction.SOUTH, exitLocation);

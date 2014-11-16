@@ -25,31 +25,33 @@ public class Door
 	 * 
 	 */
 	
-	public Door(Location location, WorldDimension dimension, Exit enter, Exit exit, int hardwareType, int insideLockType, int outsideLockType)
+	public Door(Location location, WorldDimension dimension, Exit entry, Exit exit, int hardwareType, int insideLockType, int outsideLockType)
 	{
 		doorStartLocation	= location;
 		doorDimension		= dimension;
 		
-		// Reclassify Door Locations as type DOOR
+		// Reclassify World Locations as type DOOR
 		
 		Location doorLocation 		= doorStartLocation;
-		Location doorLocationNorth 	= doorLocation.getExit(Direction.NORTH).getExitToLocation();
-		
-		for (int z = 0; z < doorDimension.getHeight(); z++)
+		Location doorLocationEntry 	= entry.getExitToLocation();
+
+		// Height
+		for (int z = 0; z < doorDimension.getLength(); z++)
 		{
-			for (int x = doorStartLocation.getWorldLocation().getX(); x < doorStartLocation.getDimension().getWidth(); x++)
+			// Width
+			for (int x = doorStartLocation.getLocation().getX(); x < doorStartLocation.getDimension().getWidth(); x++)
 			{
 				doorLocation.setType(LocationTypes.DOOR);
 				doorLocation.setDescription("Front Door");
 				
-				doorLocation = doorLocation.getExit(Direction.EAST).getExitToLocation();
+				doorLocation = doorLocation.getExit(Direction.EAST.ordinal()).getExitToLocation();
 			}
 			
-			doorLocation = doorLocationNorth;
-			doorLocationNorth = doorLocationNorth.getExit(Direction.NORTH).getExitToLocation();
+			doorLocation = doorLocationEntry;
+			doorLocationEntry = doorLocationEntry.getExit(Direction.NORTH.ordinal()).getExitToLocation();
 		}
 
-		doorEnter 	 	= enter;
+		doorEnter 	 	= entry;
 		doorExit	 	= exit;
 		doorHardware 	= new DoorHardware(hardwareType, insideLockType, outsideLockType);		
 	}

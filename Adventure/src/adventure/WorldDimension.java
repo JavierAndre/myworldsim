@@ -7,26 +7,21 @@ public class WorldDimension
 	 * 
 	 */
 	
-	private int	worldWidth;			// Along the X coordinate
-	private int	worldHeight;		// Along the Y coordinate (aka Depth)
-	private int	worldLength;		// Along the Z coordinate
+	private short	width;		// Along the X coordinate
+	private short	length;		// Along the Y coordinate
 	
 	/*
 	 * Getters
 	 * 
 	 */
 	
-	public int getWidth()
+	public short getWidth()
 	{
-		return worldWidth;
+		return width;
 	}
-	public int getHeight()
+	public short getLength()
 	{
-		return worldHeight;
-	}
-	public int getLength()
-	{
-		return worldLength;
+		return length;
 	}
 	
 	/*
@@ -34,10 +29,9 @@ public class WorldDimension
 	 * 
 	 */
 	
-	public WorldDimension(int width, int height, int length)
+	public WorldDimension(short width, short length)
 	{
-		worldWidth	= width;
-		worldHeight = height;
-		worldLength	= length;
+		this.width	= width;
+		this.length = length;
 	}
 }

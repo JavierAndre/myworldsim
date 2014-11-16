@@ -7,37 +7,39 @@ public class WorldLocation
 	 * 
 	 */
 	
-	private int	worldXCoordinate;
-	private int	worldYCoordinate;
-	private int	worldZCoordinate;
+	private short	x;		// Width (columns)
+	private short	y;		// Length (rows)
+	
+	/*
+	 * Class Constants
+	 * 
+	 */
+	
+	public static final short	NOWHERE = -1;
 	
 	/*
 	 * Getters
 	 * 
 	 */
 	
-	public int getX()
+	public short getX()
 	{
-		return worldXCoordinate;
-	}
-	public int getY()
-	{
-		return worldYCoordinate;
-	}
-	public int getZ()
-	{
-		return worldZCoordinate;
+		return x;
 	}
 	
+	public short getY()
+	{
+		return y;
+	}
+		
 	/*
 	 * Constructor
 	 * 
 	 */
 	
-	public WorldLocation(int x, int y, int z)
+	public WorldLocation(short x, short y)
 	{
-		worldXCoordinate = x;
-		worldYCoordinate = y;
-		worldZCoordinate = z;
+		this.x = x;
+		this.y = y;
 	}
 }

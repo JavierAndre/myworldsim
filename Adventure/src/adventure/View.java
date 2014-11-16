@@ -1,6 +1,6 @@
 package adventure;
 
-public class AdventurePlayer
+public class View
 {
 
 }

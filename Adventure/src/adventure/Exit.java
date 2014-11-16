@@ -5,11 +5,12 @@ public class Exit
 	/*
 	 * Class Instance Variables
 	 * 
+	 * An Exit leads nowhere if its Direction is NOWHERE and it exits to a Location that is NOWHERE
+	 * 
 	 */
 	
 	private Direction	exitDirection;
 	private Location	exitToLocation;
-	
 	
 	/*
 	 * Class Constants
