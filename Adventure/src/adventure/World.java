@@ -46,12 +46,12 @@ public class World
 	// 800 x 800 	OK - TOOK 30 SECONDS TO LESS THAN 1 MINUTE
 	// 1000 X 1000 	TOOK ALMOST 3 MINUTES
 
-	private static final 	WorldDimension 	WORLD_LOCATIONS				= new WorldDimension((short)(800), (short)(800));	// In Locations: 1 level/floor
-	public static final 	WorldDimension	WORLD_LOCATION_DIMENSION	= new WorldDimension((short)(1), (short)(1));		// x, y: in inches (x:width, y:length)
-	private static final 	String			WORLD_LOCATION_DESCRIPTION	= "World Location ";
-	private final			String			WORLD_ARRAY_CREATION_FAILED_MESSAGE = "World::World(): World array creation out-of-memory exception.";
-	private final			String			WORLD_LOCATION_CREATION_FAILED_MESSAGE = "World::World(): World Location creation out-of-memory exception.";
-	private final			String			WORLD_EXIT_CREATION_FAILED_MESSAGE = "World::World(): World Exits creation out-of-memory exception.";
+	private static final 	WorldDimension 	WORLD_LOCATIONS							= new WorldDimension((short)(800), (short)(800));	// In Locations: 1 level/floor
+	public static final 	WorldDimension	WORLD_LOCATION_DIMENSION				= new WorldDimension((short)(1), (short)(1));		// x, y: in inches (x:width, y:length)
+	private static final 	String			WORLD_LOCATION_DESCRIPTION				= "World Location ";
+	private final			String			WORLD_ARRAY_CREATION_FAILED_MESSAGE 	= "World::World(): World array creation out-of-memory exception.";
+	private final			String			WORLD_LOCATION_CREATION_FAILED_MESSAGE 	= "World::World(): World Location creation out-of-memory exception.";
+	private final			String			WORLD_EXIT_CREATION_FAILED_MESSAGE 		= "World::World(): World Exits creation out-of-memory exception.";
 	
 	/*
 	 * Constructor Method
@@ -78,7 +78,7 @@ public class World
 		{
 			System.out.println(WORLD_ARRAY_CREATION_FAILED_MESSAGE);
 			
-			// Already out of memory, System.exit(0) causes a second out-of-memory exception. Use return instead.
+			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
 			//System.exit(0);
 			return;
 		}
@@ -99,7 +99,7 @@ public class World
 		{		
 			System.out.println(WORLD_LOCATION_CREATION_FAILED_MESSAGE);
 			
-			// Already out of memory, System.exit(0) causes a second out-of-memory exception. Use return instead.
+			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
 			//System.exit(0);
 			return;
 		}
@@ -170,7 +170,7 @@ public class World
 						}
 						else
 						{
-							// No Exit to the NorthWest. Loop around to the SouthWest
+							// No Exit to the NorthWest. Loop around to the NorthEast
 							worldMap[row][col].setExit(new Exit(Direction.NORTHWEST, worldMap[row - 1][worldMap[row].length - 1]), Direction.NORTHWEST);
 						}
 					}
@@ -256,12 +256,11 @@ public class World
 						worldMap[row][col].setExit(new Exit(Direction.WEST, worldMap[row][worldMap[row].length - 1]), Direction.WEST);
 					}
 					
-					// Up
+					// Up (NOWHERE)
 					worldMap[row][col].setExit(new Exit(Direction.UP, new Location()), Direction.UP);					
 					
-					// Down
+					// Down (NOWHERE)
 					worldMap[row][col].setExit(new Exit(Direction.DOWN, new Location()), Direction.DOWN);					
-					
 				}
 			}
 			
@@ -274,10 +273,20 @@ public class World
 		{		
 			System.out.println(WORLD_EXIT_CREATION_FAILED_MESSAGE);
 			
-			// Already out of memory, System.exit(0) causes a second out-of-memory exception. Use return instead.
+			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
 			//System.exit(0);
 			return;
 		}
+	}
+	
+	/*
+	 * Move Method
+	 * 
+	 */
+	
+	public void move()
+	{
+		
 	}
 		
 	/*

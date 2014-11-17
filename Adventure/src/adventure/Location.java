@@ -27,21 +27,12 @@ public class Location
 
 	public Location()
 	{
-		// A Location is nowhere if its WorldLocation is NOWHERE (-1, -1)
-		
-		location 			= new WorldLocation(WorldLocation.NOWHERE, WorldLocation.NOWHERE);
-		locationDimension 	= new WorldDimension((short)(0), (short)(0));
+		// A Location is nowhere if its WorldLocation is NOWHERE		
+		location 			= null;
+		locationDimension 	= null;
 		locationType		= LocationTypes.NOWHERE;
-		locationDescription	= "Nowhere";
-		locationExits 	  	= new Exit[Direction.values().length];
-		
-		for (int exit = 0; exit < Direction.values().length; exit++)
-		{
-			for (Direction dir : Direction.values())
-			{
-				locationExits[exit] = new Exit(dir, null);
-			}
-		}
+		locationDescription	= null;
+		locationExits 	  	= null;
 	}
 	
 	public Location(WorldLocation loc, WorldDimension dimension, String description, LocationTypes type)

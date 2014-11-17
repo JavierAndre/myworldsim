@@ -1,0 +1,117 @@
+          Location:                      0, 0       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 2,0
+     SOUTH Exit to:        World Location 1,0
+      EAST Exit to:        World Location 0,1
+      WEST Exit to:        World Location 0,2
+ NORTHEAST Exit to:        World Location 2,1
+ NORTHWEST Exit to:        World Location 2,2
+ SOUTHEAST Exit to:        World Location 1,1
+ SOUTHWEST Exit to:        World Location 1,2
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      0, 1       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 2,1
+     SOUTH Exit to:        World Location 1,1
+      EAST Exit to:        World Location 0,2
+      WEST Exit to:        World Location 0,0
+ NORTHEAST Exit to:        World Location 2,2
+ NORTHWEST Exit to:        World Location 2,0
+ SOUTHEAST Exit to:        World Location 1,2
+ SOUTHWEST Exit to:        World Location 1,0
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      0, 2       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 2,2
+     SOUTH Exit to:        World Location 1,2
+      EAST Exit to:        World Location 0,0
+      WEST Exit to:        World Location 0,1
+ NORTHEAST Exit to:        World Location 2,0
+ NORTHWEST Exit to:        World Location 2,1
+ SOUTHEAST Exit to:        World Location 1,0
+ SOUTHWEST Exit to:        World Location 1,1
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      1, 0       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 0,0
+     SOUTH Exit to:        World Location 2,0
+      EAST Exit to:        World Location 1,1
+      WEST Exit to:        World Location 1,2
+ NORTHEAST Exit to:        World Location 0,1
+ NORTHWEST Exit to:        World Location 0,2
+ SOUTHEAST Exit to:        World Location 2,1
+ SOUTHWEST Exit to:        World Location 2,2
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      1, 1       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 0,1
+     SOUTH Exit to:        World Location 2,1
+      EAST Exit to:        World Location 1,2
+      WEST Exit to:        World Location 1,0
+ NORTHEAST Exit to:        World Location 0,2
+ NORTHWEST Exit to:        World Location 0,0
+ SOUTHEAST Exit to:        World Location 2,2
+ SOUTHWEST Exit to:        World Location 2,0
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      1, 2       ERROR
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 0,2
+     SOUTH Exit to:        World Location 2,2
+      EAST Exit to:        World Location 1,0
+      WEST Exit to:        World Location 1,1
+ NORTHEAST Exit to:        World Location 2,0       SHOULD BE 0, 0
+ NORTHWEST Exit to:        World Location 0,1
+ SOUTHEAST Exit to:        World Location 2,0
+ SOUTHWEST Exit to:        World Location 2,1
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      2, 0       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 1,0
+     SOUTH Exit to:        World Location 0,0
+      EAST Exit to:        World Location 2,1
+      WEST Exit to:        World Location 2,2
+ NORTHEAST Exit to:        World Location 1,1
+ NORTHWEST Exit to:        World Location 1,2
+ SOUTHEAST Exit to:        World Location 0,1
+ SOUTHWEST Exit to:        World Location 0,2
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      2, 1       OK
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 1,1
+     SOUTH Exit to:        World Location 0,1
+      EAST Exit to:        World Location 2,2
+      WEST Exit to:        World Location 2,0
+ NORTHEAST Exit to:        World Location 1,2
+ NORTHWEST Exit to:        World Location 1,0
+ SOUTHEAST Exit to:        World Location 0,2
+ SOUTHWEST Exit to:        World Location 0,0
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
+          Location:                      2, 2       ERROR
+   NOWHERE Exit to:                   Nowhere
+     NORTH Exit to:        World Location 1,2
+     SOUTH Exit to:        World Location 0,2
+      EAST Exit to:        World Location 2,0
+      WEST Exit to:        World Location 2,1
+ NORTHEAST Exit to:        World Location 2,0       SHOULD BE 1, 0
+ NORTHWEST Exit to:        World Location 1,1
+ SOUTHEAST Exit to:        World Location 0,0
+ SOUTHWEST Exit to:        World Location 0,1
+        UP Exit to:                   Nowhere
+      DOWN Exit to:                   Nowhere
+
