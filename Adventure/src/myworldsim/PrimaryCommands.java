@@ -12,10 +12,16 @@ public enum PrimaryCommands
 	STAND (7),
 	HIT (8),
 	BREAK (9),
-	LIGHT (10),		// WHAT: A LIGHT	HOW: ON/OFF		WHAT: FIRE
+	LIGHT (10),		// WHAT: FIRE
 	CUT (11),
 	COOK (12),
-	KILL (13);
+	KILL (13),
+	EAT(14),
+	LAUNCH(15),
+	PICKUP(16),
+	TAKE(17),
+	SHUTOFF(18),
+	TURNON (19);
 	
 	/*
 	 * Class Instance Variables
