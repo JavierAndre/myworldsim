@@ -1,39 +1,41 @@
 package myworldsim;
 
-public class Tree
-{
+public class Tree<T extends Comparable<T>> {
+
 	/*
 	 * Class Instance Variables
 	 * 
 	 */
 	
-	private int		treeNumber;
-	private int		treeNumberOfBranches;
-	private int		treeNumberOfRoots;
-
+	private TreeNode<T> rootNode;
+	
 	/*
-	 * Class Constants
+	 * Constructors
 	 * 
 	 */
 	
-	private final int	DEFAULT_NUMBER_OF_BRANCHES	= 10;
-	private final int	DEFAULT_NUMBER_OF_ROOTS		= 10;
-	
-	/*
-	 * Constructor Methods
-	 * 
-	 */
-	
-	public Tree()
-	{
-		treeNumberOfBranches 	= DEFAULT_NUMBER_OF_BRANCHES;
-		treeNumberOfRoots		= DEFAULT_NUMBER_OF_ROOTS;
+	public Tree() {
+		rootNode = null;
 	}
 	
-	public Tree(int number, int branches, int roots)
-	{
-		treeNumber				= number;
-		treeNumberOfBranches	= branches;
-		treeNumberOfRoots		= roots;
+	/*
+	 * Tree Operations
+	 * 
+	 */
+	
+	public boolean insert(T newNodeData) {
+		
+		boolean inserted = false;
+		
+		// Check for an empty tree
+		if (rootNode == null) {
+			
+			rootNode = new TreeNode<T>(newNodeData);
+		}
+		else {
+			inserted = rootNode.insert(newNodeData);
+		}
+		
+		return inserted;
 	}
 }

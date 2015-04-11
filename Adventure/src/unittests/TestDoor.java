@@ -24,23 +24,9 @@ public class TestDoor
 	 * 
 	 */
 	
-	public TestDoor(int hardwareType, int insideLockType, int outsideLockType)
+	public TestDoor(int hardwareType, int insideLockType, int outsideLockType, Location location, String locationDescription, Direction entryDirection, Direction exitDirection)
 	{
-		WorldLocation doorLocation	 	= new WorldLocation((short)(0), (short)(1));
-		WorldDimension doorDimension 	= new WorldDimension((short)(3), (short)(8));
-
-		Location location				= new Location(doorLocation, doorDimension, "Front Door", LocationTypes.DOOR);
-		
-		WorldLocation enterCoordinates	= new WorldLocation((short)(2),(short)(1));
-		Location enterLocation 		 	= new Location(enterCoordinates, World.WORLD_LOCATION_DIMENSION, "entrance hall", LocationTypes.HALLWAY);
-		
-		WorldLocation exitCoordinates 	= new WorldLocation((short)(0),(short)(1));
-		Location exitLocation 		 	= new Location(exitCoordinates, World.WORLD_LOCATION_DIMENSION, "entrance", LocationTypes.ENTRANCE);
-		
-		Exit enter 						= new Exit(Direction.NORTH, enterLocation);
-		Exit exit 						= new Exit(Direction.SOUTH, exitLocation);
-		
-		door = new Door(location, doorDimension, enter, exit, hardwareType, insideLockType, outsideLockType);
+		door = new Door(hardwareType, insideLockType, outsideLockType, location, locationDescription, entryDirection, exitDirection);
 	}
 	
 	/*

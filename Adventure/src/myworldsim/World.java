@@ -51,7 +51,7 @@ public class World
 	private static final 	String			WORLD_LOCATION_DESCRIPTION				= "World Location ";
 	private final			String			WORLD_ARRAY_CREATION_FAILED_MESSAGE 	= "World::World(): World array creation out-of-memory exception.";
 	private final			String			WORLD_LOCATION_CREATION_FAILED_MESSAGE 	= "World::World(): World Location creation out-of-memory exception.";
-	private final			String			WORLD_EXIT_CREATION_FAILED_MESSAGE 		= "World::World(): World Exits creation out-of-memory exception.";
+	private final			String			WORLD_EXIT_SETUP_FAILED_MESSAGE 		= "World::World(): World Exits setup out-of-memory exception.";
 	
 	/*
 	 * Constructor Method
@@ -61,9 +61,35 @@ public class World
 	public World()
 	{
 		/*
-		 * Create the World Locations and their Exits
+		 * Create the World Locations
 		 * 
 		 */
+		
+		if (createWorldLocations())
+		{
+			/*
+			 * Setup the World Exits
+			 * 
+			 */
+			
+			if (setupWorldExits())
+			{
+				System.out.print("World::World(): World created. ");
+				DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+				Date date = new Date();
+				System.out.println(dateFormat.format(date));			
+			}
+		}
+	}
+
+	/*
+	 * Create World Locations Methods
+	 * 
+	 */
+	
+	public boolean createWorldLocations() {
+		
+		boolean locationsCreated = false;
 		
 		try
 		{
@@ -73,6 +99,29 @@ public class World
 			System.out.println(dateFormat.format(date));
 			
 			worldMap = new Location[WORLD_LOCATIONS.getWidth()][WORLD_LOCATIONS.getLength()];
+			
+			try
+			{
+				System.out.println("World::World(): Creating the World Locations...");
+				
+				for (short row = 0; row < worldMap.length; row++)
+				{
+					for (short col = 0; col < worldMap[row].length; col++)
+					{
+						worldMap[row][col]= new Location(new WorldLocation(row, col), WORLD_LOCATION_DIMENSION, WORLD_LOCATION_DESCRIPTION + row + "," + col, LocationTypes.WORLD);
+					}
+				}
+				
+				locationsCreated = true;
+			}
+			catch (OutOfMemoryError e)
+			{		
+				System.out.println(WORLD_LOCATION_CREATION_FAILED_MESSAGE);
+				
+				// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
+				//System.exit(0);
+			}
+			
 		}
 		catch (OutOfMemoryError e)
 		{
@@ -80,34 +129,24 @@ public class World
 			
 			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
 			//System.exit(0);
-			return;
 		}
+		
+		return locationsCreated;
+	}
+	
+	/*
+	 * Setup World Exits Method
+	 * 
+	 */
+	
+	public boolean setupWorldExits()
+	{	
+		boolean exitsSetup = false;
 		
 		try
 		{
-			System.out.println("World::World(): Creating the World Locations...");
-			
-			for (short row = 0; row < worldMap.length; row++)
-			{
-				for (short col = 0; col < worldMap[row].length; col++)
-				{
-					worldMap[row][col]= new Location(new WorldLocation(row, col), WORLD_LOCATION_DIMENSION, WORLD_LOCATION_DESCRIPTION + row + "," + col, LocationTypes.WORLD);
-				}
-			}
-		}
-		catch (OutOfMemoryError e)
-		{		
-			System.out.println(WORLD_LOCATION_CREATION_FAILED_MESSAGE);
-			
-			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
-			//System.exit(0);
-			return;
-		}
-
-		try
-		{
-			System.out.println("Creating the World exits...");
-		
+			System.out.println("Setting up the World exits...");
+		 
 			// Create the Locations' Exits. Assumes the world is a sphere (Locations at the edges wrap-around).
 			for (int row = 0; row < worldMap.length; row++)
 			{
@@ -261,19 +300,189 @@ public class World
 				}
 			}
 			
-			System.out.print("World::World(): World created. ");
-			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-			Date date = new Date();
-			System.out.println(dateFormat.format(date));
+			exitsSetup = true;
 		}
 		catch (OutOfMemoryError e)
-		{		
-			System.out.println(WORLD_EXIT_CREATION_FAILED_MESSAGE);
+		{
+			System.out.println(WORLD_EXIT_SETUP_FAILED_MESSAGE);
 			
 			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
 			//System.exit(0);
-			return;
 		}
+		
+		return exitsSetup;
+	}
+	
+	/*
+	 * Create Location Exits Method
+	 * 
+	 */
+	
+	public boolean createLocationExits(Location location)
+	{	
+		boolean exitsCreated = false;
+		
+		try
+		{
+			System.out.println("Creating the Location " + location.getDescription() + " exits...");
+		 
+			// North
+			try
+			{
+				location.setExit(Direction.NORTH, worldMap[location.getLocation().getY() - 1][location.getLocation().getX()]);
+			}
+			catch (Exception e)
+			{
+				// No Exit to the North. Loop around to the South
+				location.setExit(Direction.NORTH, worldMap[worldMap.length - 1][location.getLocation().getX()]);
+			}
+			
+			// Northeast
+			try
+			{
+				location.setExit(Direction.NORTHEAST, worldMap[location.getLocation().getY() - 1][location.getLocation().getX() + 1]);
+			}
+			catch (Exception e)
+			{
+				if (location.getLocation().getY() - 1 < 0 && location.getLocation().getX() + 1 > worldMap[location.getLocation().getY()].length - 1)
+				{
+					// No Exit to the NorthEast. Loop around to the SouthWest
+					location.setExit(Direction.NORTHEAST, worldMap[worldMap.length - 1][0]);
+				}						
+				else if (location.getLocation().getY() - 1 < 0)
+				{
+					// No Exit to the NorthEast. Loop around to the SouthEast
+					location.setExit(Direction.NORTHEAST, worldMap[worldMap.length - 1][location.getLocation().getX() + 1]);
+				}
+				else
+				{
+					// No Exit to the NorthEast. Loop around to the NorthWest
+					location.setExit(Direction.NORTHEAST, worldMap[location.getLocation().getY() - 1][0]);
+				}
+			}
+			
+			// Northwest
+			try
+			{
+				location.setExit(Direction.NORTHWEST, worldMap[location.getLocation().getY() - 1][location.getLocation().getX() - 1]);
+			}
+			catch (Exception e)
+			{
+				if (location.getLocation().getY() - 1 < 0 && location.getLocation().getX() - 1 < 0)
+				{
+					// No Exit to the NorthWest. Loop around to the SouthEast
+					location.setExit(Direction.NORTHWEST, worldMap[worldMap.length - 1][worldMap[location.getLocation().getY()].length - 1]);
+				}
+				else if (location.getLocation().getY() - 1 < 0) 
+				{
+					// No Exit to the NorthWest. Loop around to the SouthWest
+					location.setExit(Direction.NORTHWEST, worldMap[worldMap.length - 1][location.getLocation().getX() - 1]);
+				}
+				else
+				{
+					// No Exit to the NorthWest. Loop around to the NorthEast
+					location.setExit(Direction.NORTHWEST, worldMap[location.getLocation().getY() - 1][worldMap[location.getLocation().getY()].length - 1]);
+				}
+			}
+
+			// South
+			try
+			{
+				location.setExit(Direction.SOUTH, worldMap[location.getLocation().getY() + 1][location.getLocation().getX()]);
+			}
+			catch (Exception e)
+			{
+				// No Exit to the South. Loop around to the North
+				location.setExit(Direction.SOUTH, worldMap[0][location.getLocation().getX()]);
+			}
+
+			// SouthEast
+			try
+			{
+				location.setExit(Direction.SOUTHEAST, worldMap[location.getLocation().getY() + 1][location.getLocation().getX() + 1]);
+			}
+			catch (Exception e)
+			{
+				if (location.getLocation().getY() + 1 > worldMap.length - 1 && location.getLocation().getX() + 1 > worldMap[location.getLocation().getY()].length - 1)
+				{
+					// No Exit to the SouthEast. Loop around to the NorthWest
+					location.setExit(Direction.SOUTHEAST, worldMap[0][0]);
+				}						
+				else if (location.getLocation().getY() + 1 > worldMap.length - 1)
+				{
+					// No Exit to the SouthEast. Loop around to the NorthEast
+					location.setExit(Direction.SOUTHEAST, worldMap[0][location.getLocation().getX() + 1]);
+				}
+				else
+				{
+					// No Exit to the SouthEast. Loop around to the SouthWest
+					location.setExit(Direction.SOUTHEAST, worldMap[location.getLocation().getY() + 1][0]);
+				}
+			}
+
+			// SouthWest
+			try
+			{
+				location.setExit(Direction.SOUTHWEST, worldMap[location.getLocation().getY() + 1][location.getLocation().getX() - 1]);
+			}
+			catch (Exception e)
+			{
+				if (location.getLocation().getY() + 1 > worldMap.length - 1 && location.getLocation().getX() - 1 < 0)
+				{
+					// No Exit to the SouthWest. Loop around to the NorthEast
+					worldMap[location.getLocation().getY()][location.getLocation().getX()].setExit(Direction.SOUTHWEST, worldMap[0][worldMap[location.getLocation().getY()].length - 1]);
+				}
+				else if (location.getLocation().getY() + 1 > worldMap.length - 1)
+				{
+					// No Exit to the SouthWest. Loop around to the NorthWest
+					location.setExit(Direction.SOUTHWEST, worldMap[0][location.getLocation().getX() - 1]);
+				}
+				else
+				{
+					// No Exit to the SouthWest. Loop around to the SouthEast
+					location.setExit(Direction.SOUTHWEST, worldMap[location.getLocation().getY() + 1][worldMap[location.getLocation().getY()].length - 1]);
+				}
+			}
+			
+			// East
+			try
+			{
+				location.setExit(Direction.EAST, worldMap[location.getLocation().getY()][location.getLocation().getX() + 1]);
+			}
+			catch (Exception e)
+			{
+				// No Exit to the East. Loop around to the West
+				location.setExit(Direction.EAST, worldMap[location.getLocation().getY()][0]);
+			}
+			
+			// West
+			try
+			{
+				location.setExit(Direction.WEST, worldMap[location.getLocation().getY()][location.getLocation().getX() - 1]);
+			}
+			catch (Exception e)
+			{
+				// No Exit to the West. Loop around to the East
+				location.setExit(Direction.WEST, worldMap[location.getLocation().getY()][worldMap[location.getLocation().getY()].length - 1]);
+			}
+			
+			// Up (NOWHERE)
+			location.setExit(Direction.UP, new Location());					
+			
+			// Down (NOWHERE)
+			location.setExit(Direction.DOWN, new Location());					
+			
+			exitsCreated = true;
+		}
+		catch (OutOfMemoryError e)
+		{
+			System.out.println(WORLD_EXIT_SETUP_FAILED_MESSAGE);
+			
+			// Already out of memory, System.exit(0) or using Date causes a second out-of-memory exception. Use return instead.
+			//System.exit(0);
+		}
+		
+		return exitsCreated;
 	}
 	
 	/*

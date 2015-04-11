@@ -46,17 +46,17 @@ public class Window
 		{
 			windowHardware = new WindowHardware();
 			
-			windowEntryDirection = Direction.NOWHERE;
-			windowExitDirection  = Direction.NOWHERE;
+			windowEntryDirection = Exit.NOWHERE;
+			windowExitDirection  = Exit.NOWHERE;
 		}		
 		// Check if the window is broken
-		else if ((entryDirection == Direction.NOWHERE && exitDirection == Direction.NOWHERE))
+		else if ((entryDirection == Exit.NOWHERE && exitDirection == Exit.NOWHERE))
 		{
 			windowHardware = new WindowHardware(type, lockType);
 			windowHardware.setBroken();
 			
-			windowEntryDirection = Direction.NOWHERE;
-			windowExitDirection  = Direction.NOWHERE;
+			windowEntryDirection = Exit.NOWHERE;
+			windowExitDirection  = Exit.NOWHERE;
 		}
 		// Normal type of window
 		else
@@ -107,7 +107,7 @@ public class Window
 
 	public boolean canLookIn()
 	{
-		return windowLookInDirection != Direction.NOWHERE;
+		return windowLookInDirection != Exit.NOWHERE;
 	}
 	
 	public boolean canLookOut()
@@ -205,7 +205,7 @@ public class Window
 	{
 		boolean canJump = false;
 		
-		if (windowEntryDirection != Direction.NOWHERE && !windowHardware.isLatched())
+		if (windowEntryDirection != Exit.NOWHERE && !windowHardware.isLatched())
 		{
 			canJump = true;
 		}
@@ -217,7 +217,7 @@ public class Window
 	{
 		boolean canJump = false;
 		
-		if (windowExitDirection != Direction.NOWHERE && !windowHardware.isLatched())
+		if (windowExitDirection != Exit.NOWHERE && !windowHardware.isLatched())
 		{
 			canJump = true;
 		}

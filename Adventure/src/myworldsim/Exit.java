@@ -17,12 +17,18 @@ public class Exit
 	 * 
 	 */
 	
-	
+	public static final Direction NOWHERE = null;
 	
 	/*
 	 * Constructor Methods
 	 * 
 	 */
+	
+	public Exit()
+	{
+		exitDirection	= NOWHERE;
+		exitToLocation	= null;
+	}
 	
 	public Exit(Direction direction, Location location)
 	{

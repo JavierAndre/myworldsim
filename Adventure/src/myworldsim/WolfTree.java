@@ -1,6 +1,6 @@
 package myworldsim;
 
-public class WolfTree extends Tree
+public class WolfTree extends TreeModel
 {
 	/*
 	 * Class Instance Variables

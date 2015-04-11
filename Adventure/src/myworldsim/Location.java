@@ -38,9 +38,13 @@ public class Location
 		location		  	= loc;
 		locationDescription = description;
 		locationType		= type;
+		locationExits 	  	= new Exit[Direction.values().length];
 		
-		// Do not create an Exit for NOWHERE
-		locationExits 	  	= new Exit[Direction.values().length - 1];
+		// Create the Exits
+		for (int exit = 0; exit < Direction.values().length; exit++)
+		{
+			locationExits[exit] = new Exit();
+		}
 	}
 
 	/*

@@ -2,7 +2,6 @@ package myworldsim;
 
 public enum Direction
 {
-	NOWHERE((byte)(-1)),
 	NORTH((byte)(0)),
 	SOUTH((byte)(1)),
 	EAST((byte)(2)),
@@ -20,13 +19,6 @@ public enum Direction
 	 */
 	
 	private byte value;
-	
-	/*
-	 * Constants
-	 * 
-	 */
-	
-	
 	
 	/*
 	 * Construtor Method

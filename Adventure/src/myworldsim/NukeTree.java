@@ -1,6 +1,6 @@
 package myworldsim;
 
-public class NukeTree extends Tree
+public class NukeTree extends TreeModel
 {
 	/*
 	 * Class Instance Variables
