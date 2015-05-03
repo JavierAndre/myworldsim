@@ -2,6 +2,7 @@ package unittests;
 
 import myworldsim.Direction;
 import myworldsim.Door;
+import myworldsim.DoorHardware;
 import myworldsim.DoorKey;
 import myworldsim.Exit;
 import myworldsim.Location;
@@ -195,15 +196,29 @@ public class TestDoor
 			
 			// Bust the door open!
 			
-			
-			
-			
-			
-			
 		}
 		else
 		{
 			System.out.println("Can't find the key.");
 		}
+	}
+	
+	/*
+	 * main Method
+	 * 
+	 */
+	
+	public static void main(String[] args)
+	{
+		World world = new World();
+		
+		String locationDescription		= "Front Door";
+		Location location 				= world.getWorldLocation(0, 1);		
+		Direction enter 				= Direction.NORTH;
+		Direction exit 					= Direction.SOUTH;		
+		
+		// Create the Door location exits
+		TestDoor door = new TestDoor(DoorHardware.HANDLESET_TYPE, DoorHardware.KNOB_LOCK_TYPE, DoorHardware.KEY_LOCK_TYPE, location, locationDescription, enter, exit);
+		door.run();
 	}
 }
