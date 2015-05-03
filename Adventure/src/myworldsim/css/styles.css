@@ -1,0 +1,12 @@
+.text-area .content {
+	// Rules here apply to all TextAreas
+
+}
+
+#command-textarea .content {
+	-fx-background-color: YELLOW;
+}
+
+#gamelog-textarea .content {
+	-fx-background-color: LIGHTBLUE;
+}
