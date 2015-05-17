@@ -351,10 +351,10 @@ public class CommandInterpreterModel
 		return executionMessage;
 	}
 		
-	private void move(CommandModel commandModel, Location currentLocation) {
+	private void move(CommandModel commandModel, Object currentLocation) {
 		
 		System.out.println("Command: " + commandModel.getCommandName() + ", Command Parameter: " + commandModel.getCommandParameter());
-		System.out.println("Current location: " + currentLocation.getLocation().getX() + ", " + currentLocation.getLocation().getY());		
+		//System.out.println("Current location: " + (Location)(currentLocation.getLocation().getX() + ", " + currentLocation.getLocation().getY());		
 	}
 	
 	private void throw_reserved(String command) {
