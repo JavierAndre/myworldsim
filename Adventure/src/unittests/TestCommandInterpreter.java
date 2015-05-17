@@ -93,14 +93,14 @@ private Controller controller;
 		System.out.println("Command Interpreter Primary Command Test: Move" + "\n");
 		
 		// Commands needs to be all lowercase in order to match the method names
-		String executionMessage = controller.executeCommand("move");
+		String executionMessage = controller.executeCommand("move", "");
 		
 		System.out.println("\n" + executionMessage + "\n");
 		
 		System.out.println("Command Interpreter Primary Command Test: List" + "\n");
 		
 		// Commands needs to be all lowercase in order to match the method names
-		executionMessage = controller.executeCommand("list");
+		executionMessage = controller.executeCommand("list", "");
 		
 		System.out.println(executionMessage);
 	}
@@ -114,7 +114,7 @@ private Controller controller;
 		for (CommandModel commandModel : primaryCommandList) {
 
 			// Commands needs to be all lowercase in order to match the method names
-			String executionMessage = controller.executeCommand(commandModel.getCommandName());
+			String executionMessage = controller.executeCommand(commandModel.getCommandName(), "");
 			
 			System.out.println("\n" + executionMessage + "\n");
         }
@@ -131,7 +131,7 @@ private Controller controller;
             for (int index = 0; index < method.length; index++) {
 
             	// Commands needs to be all lowercase in order to match the method names
-            	String executionMessage = controller.executeCommand(method[index].getName());
+            	String executionMessage = controller.executeCommand(method[index].getName(), "");
             	
             	System.out.println("\n" + executionMessage + "\n");
             }
@@ -146,14 +146,14 @@ private Controller controller;
 		System.out.println("Command Interpreter Synonym Command Test: Amble" + "\n");
 		
 		// Commands needs to be all lowercase in order to match the method names
-		String executionMessage = controller.executeCommand("amble");
+		String executionMessage = controller.executeCommand("amble", "");
 		
 		System.out.println("\n" + executionMessage + "\n");
 		
 		System.out.println("Command Interpreter Synonym Command Test: List" + "\n");
 		
 		// Commands needs to be all lowercase in order to match the method names
-		executionMessage = controller.executeCommand("list");
+		executionMessage = controller.executeCommand("list", "");
 		
 		System.out.println(executionMessage);
 	}
@@ -167,7 +167,7 @@ private Controller controller;
 		for (CommandModel commandModel : primaryCommandList) {
 	
 			// Commands needs to be all lowercase in order to match the method names
-			String executionMessage = controller.executeCommand(commandModel.getCommandName());
+			String executionMessage = controller.executeCommand(commandModel.getCommandName(), "");
 			
 			System.out.println("\n" + executionMessage + "\n");
         }

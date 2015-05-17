@@ -20,6 +20,8 @@ public class CommandModel implements Comparable<CommandModel> {
 	protected Date		date_added;
 	protected Date		date_last_updated;
 	protected boolean	active;
+
+	private String		commandParameter;
 	
 	/*
 	 * Class Constants
@@ -96,6 +98,14 @@ public class CommandModel implements Comparable<CommandModel> {
 		this.active = active;
 	}
 
+	public String getCommandParameter() {
+		return commandParameter;
+	}
+	
+	public void setCommandParameter(String parameter) {
+		commandParameter = parameter;
+	}
+	
 	/*
 	 * Constructors
 	 * 

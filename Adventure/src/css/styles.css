@@ -1,0 +1,20 @@
+.text-area {
+	// Rules here apply to all TextAreas
+	-fx-border-color: blue;
+	-fx-font-family: "Buxton Sketch";
+	-fx-font-size: 24px;
+	-fx-font-weight: bold;
+}
+
+.text-area .content {
+	
+}
+
+#command-textarea .content {
+	-fx-background-color: yellow;
+	-fx-cursor: hand;
+}
+
+#gamelog-textarea .content {	
+	-fx-background-color: lightblue;
+}

@@ -10,16 +10,18 @@ public class Controller {
 	 * Class Instance Variables
 	 * 
 	 */
-	
+
+	private World					world;
 	private SQLDBModel				sqlDBModel;
 	private CommandInterpreterModel commandInterpreterModel;
+	private Location				currentLocation;
 	
 	/*
 	 * Class Constants
 	 * 
 	 */
 	
-	public static final String	VERSION	= "0.3";
+	public static final String	VERSION	= "0.4";
 
 	/*
 	 * Getters
@@ -36,6 +38,8 @@ public class Controller {
 	 */
 	
 	public Controller() {
+		world 					= new World();
+		currentLocation 		= world.getWorldLocation(World.WORLD_LOCATIONS.getWidth() / 2, World.WORLD_LOCATIONS.getHeight() / 2);
 		sqlDBModel 				= new SQLDBModel();
 		commandInterpreterModel = new CommandInterpreterModel();
 
@@ -57,7 +61,7 @@ public class Controller {
 	 * 
 	 */
 	
-	public String executeCommand(String command) {
+	public String executeCommand(String command, String commandParameter) {
 
 		String executionMessage = "";
 		boolean executed 		= false;
@@ -68,7 +72,8 @@ public class Controller {
 		if (commandModel.getCommandId() > 0) {
 		
 			// Execute the command
-			executionMessage = commandInterpreterModel.executeCommand(commandModel.getCommandName());
+			commandModel.setCommandParameter(commandParameter);
+			executionMessage = commandInterpreterModel.executeCommand(commandModel, currentLocation);
 			executed 		 = commandInterpreterModel.getStatus();
 		}
 		else {

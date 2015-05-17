@@ -8,7 +8,7 @@ public class WorldDimension
 	 */
 	
 	private short	width;		// Along the X coordinate
-	private short	length;		// Along the Y coordinate
+	private short	height;		// Along the Y coordinate
 	
 	/*
 	 * Getters
@@ -19,9 +19,9 @@ public class WorldDimension
 	{
 		return width;
 	}
-	public short getLength()
+	public short getHeight()
 	{
-		return length;
+		return height;
 	}
 	
 	/*
@@ -29,9 +29,9 @@ public class WorldDimension
 	 * 
 	 */
 	
-	public WorldDimension(short width, short length)
+	public WorldDimension(short width, short height)
 	{
 		this.width	= width;
-		this.length = length;
+		this.height = height;
 	}
 }

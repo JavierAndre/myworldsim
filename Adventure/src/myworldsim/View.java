@@ -1,9 +1,16 @@
 package myworldsim;
 
+import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
+
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -30,7 +37,7 @@ public class View
 	 */
 	
 	public final String			GREETINGS 			= "Welcome to My World Sim!." + "\n" + "Enter your command at the > prompt on the command box." + "\n";
-	public final String			PROMPT 	  			= "> ";
+	public final String			PROMPT 	  			= ">";
 	public final int			PROMPT_CHAR_POS		= 0;
 	public final int			PROMPT_SPACER_POS	= 1;
 	public final String			PROMPT_PLUS_ENTER	= PROMPT + "\n";
@@ -44,19 +51,26 @@ public class View
 		this.controller = controller;
 		
 		/*
-		 * Create the Outer Pane (the content pane inside the Window Frame)
+		 * Create the Inner Pane (the content pane inside the Window Frame)
 		 * and its boxes
 		 * 
 		 */
 		
-		VBox outerPane = new VBox();
-		HBox innerPane = new HBox();
+		VBox innerPane = new VBox();
 
-		// Set spacing between child elements
-		innerPane.setSpacing(5);
+		/*
+		 * Create the game log area
+		 * 
+		 */
 		
-		outerPane.getChildren().add(innerPane);
-				
+		gameLogTextArea = new TextArea();
+		gameLogTextArea.setId("gamelog-textarea");
+		gameLogTextArea.setEditable(false);
+		gameLogTextArea.setPrefSize(600, 400);
+		gameLogTextArea.setText(GREETINGS);
+
+		innerPane.getChildren().add(gameLogTextArea);
+		
 		/*
 		 * Create the command area
 		 * 
@@ -64,12 +78,9 @@ public class View
 		
 		commandTextArea = new TextArea();
 		commandTextArea.setId("command-textarea");
-		commandTextArea.setMinSize(200, 400);
-		commandTextArea.setMaxSize(200, 400);
-		commandTextArea.setFont(Font.font("Buxton Sketch", FontWeight.MEDIUM, 24));
-		commandTextArea.setStyle("-fx-border-color:blue");
-		commandTextArea.setPromptText(PROMPT);
+		commandTextArea.setPrefSize(600, 50);
 		commandTextArea.setFocusTraversable(false);
+		commandTextArea.setPromptText(PROMPT);
 		commandTextArea.setOnKeyReleased(new TextAreaKeyReleasedEventHandler());
 		
 		Platform.runLater(new Runnable() {
@@ -80,37 +91,20 @@ public class View
 		});
 		
 		innerPane.getChildren().add(commandTextArea);
-		
-		/*
-		 * Create the game log area
-		 * 
-		 */
-		
-		gameLogTextArea = new TextArea();
-		gameLogTextArea.setId("gamelog-textarea");
-		gameLogTextArea.setEditable(false);
-		gameLogTextArea.setMinSize(600, 400);
-		gameLogTextArea.setMaxSize(600, 400);
-		gameLogTextArea.setFont(Font.font("Buxton Sketch", FontWeight.MEDIUM, 24));
-		gameLogTextArea.setStyle("-fx-border-color:blue");
-		gameLogTextArea.setText(GREETINGS);
-
-		innerPane.getChildren().add(gameLogTextArea);
 
 		/*
 		 *  Create the Scene and setup the Primary Stage
 		 *  
 		 */
 		
-		Scene scene = new Scene(outerPane);
-		String css = View.class.getResource("css/styles.css").toExternalForm();
-        scene.getStylesheets().add(css);
-		
+		Scene scene = new Scene(innerPane);
+		scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+
 		// Setup the primary stage (the Window frame)
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Our World Sim - Version " + Controller.VERSION);
 		primaryStage.setResizable(false);
-		
+
 		// Display the primary stage	
 		primaryStage.show();
 	}
@@ -131,20 +125,16 @@ public class View
 			if (keyEvent.getCode() == KeyCode.ENTER)  {
 				
 				// Check if the player entered a command
-				if (!commandTextArea.getText().endsWith(PROMPT_PLUS_ENTER)) {
+				if (commandTextArea.getText().length() > 1) {
 
 					// Extract the command
-					String text = commandTextArea.getText();
-					int promptIndex = text.lastIndexOf(PROMPT, text.length() - 1);
-					int startIndex = promptIndex + 1;
-					String command = text.substring(startIndex, text.length()).trim().toLowerCase();
+					String command = commandTextArea.getText().trim().toLowerCase();
 
-					setGameLogLabel(PROMPT + command);
+					// Extract the command parameter
+					String commandParameter = "north";
 					
-					if (command.length() > 0) {
-						
-						setGameLogLabel(controller.executeCommand(command));
-					}
+					setGameLogLabel(PROMPT + command);
+					setGameLogLabel(controller.executeCommand(command, commandParameter));
 					
 					commandSaveArea = commandTextArea.getText();
 					commandTextArea.setText("");
@@ -159,11 +149,8 @@ public class View
 					});
 				}
 				else {
-					// Remove the Enter character
-					commandTextArea.setText(commandSaveArea);
-					commandSaveArea = commandTextArea.getText();
+					commandTextArea.setText("");
 					commandTextArea.positionCaret(commandTextArea.getText().length());
-					gameLogTextArea.positionCaret(gameLogTextArea.getText().length());
 					
 					Platform.runLater(new Runnable() {
 					     @Override
@@ -172,7 +159,7 @@ public class View
 					     }
 					});
 				}
-	        }
+			}
 		}
     }
 }
