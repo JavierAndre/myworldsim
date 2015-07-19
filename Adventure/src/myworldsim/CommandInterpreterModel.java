@@ -136,113 +136,6 @@ public class CommandInterpreterModel
 	 * 
 	 */
 	
-	public String executeCommand(CommandModel commandModel) {
-
-		String	executionMessage = "";
-		boolean executed 		 = false;
-		
-		// Find the command and get its command ID		
-		CommandTreeNode<CommandModel> commandTreeNode = commandTree.find(commandModel);
-
-		// Check if the command was found
-		if (commandTreeNode.getData() != CommandTreeNode.NOT_FOUND) {
-			
-			commandModel = (CommandModel) commandTreeNode.getData();
-		
-			// String parameterl
-			Class<?>[] paramString = new Class[1];
-			paramString[0] = String.class;
-			
-			try {
-				Class<?> cls = Class.forName("myworldsim.CommandInterpreterModel");
-				Object obj = cls.newInstance();
-		 
-				// Call the Command method, pass a String param 
-				Method method = cls.getDeclaredMethod(commandModel.getCommandName(), paramString);
-				method.invoke(obj, new String(commandModel.getCommandParameter()));
-
-				executionMessage = commandModel.getCommandText();
-				executed = true;
-			}
-			catch(ClassNotFoundException e){
-				System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-			}
-			catch(IllegalAccessException e){
-				System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-			}
-			catch(InstantiationException e){
-				System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-			}
-			catch(NoSuchMethodException e){
-				
-				// Check for a reserved word Command
-				try {
-					Class<?> cls = Class.forName("myworldsim.CommandInterpreterModel");
-					Object obj = cls.newInstance();
-			 
-					// Call the Command method, pass a String param 
-					Method method = cls.getDeclaredMethod(commandModel.getCommandName() + RESERVED_WORD, paramString);
-					method.invoke(obj, new String(commandModel.getCommandParameter()));
-
-					executionMessage = commandModel.getCommandText();
-					executed 		 = true;
-				}
-				catch(ClassNotFoundException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-				}
-				catch(IllegalAccessException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-				}
-				catch(InstantiationException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-				}
-				catch(NoSuchMethodException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Method " + commandModel.getCommandName() + RESERVED_WORD + " in class myworldsim.CommandInterpreterModel not found.");
-					executionMessage = COMMAND_NOT_FOUND;
-				}
-				catch(InvocationTargetException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Method " + commandModel.getCommandName() + RESERVED_WORD + " in class myworldsim.CommandInterpreterModel not found.");
-					executionMessage = COMMAND_NOT_FOUND;
-				}
-			}
-			catch(InvocationTargetException e){
-				
-				// Check for a reserved word Command
-				try {
-					Class<?> cls = Class.forName("myworldsim.CommandInterpreterModel");
-					Object obj = cls.newInstance();
-			 
-					// Call the Command method, pass a String param 
-					Method method = cls.getDeclaredMethod(commandModel.getCommandName() + RESERVED_WORD, paramString);
-					method.invoke(obj, new String(commandModel.getCommandParameter()));
-
-					executionMessage = commandModel.getCommandText();
-					executed 		 = true;
-				}
-				catch(ClassNotFoundException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-				}
-				catch(IllegalAccessException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-				}
-				catch(InstantiationException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Class myworldsim.CommandInterpreterModel not found.");
-				}
-				catch(NoSuchMethodException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Method " + commandModel.getCommandName() + RESERVED_WORD + " in class myworldsim.CommandInterpreterModel not found.");
-					executionMessage = COMMAND_NOT_FOUND;
-				}
-				catch(InvocationTargetException ex){
-					System.out.println("CommandInterpreterModel::executeCommand(): Method " + commandModel.getCommandName() + RESERVED_WORD + " in class myworldsim.CommandInterpreterModel not found.");
-					executionMessage = COMMAND_NOT_FOUND;
-				}
-			}
-		}
-		
-		executionStatus = executed;
-		return executionMessage;
-	}
-	
 	public String executeCommand(CommandModel commandModel, Object commandObject) {
 
 		String	executionMessage = "";
@@ -290,7 +183,7 @@ public class CommandInterpreterModel
 			 
 					// Call the Command method, pass a String param 
 					Method method = cls.getDeclaredMethod(commandModel.getCommandName() + RESERVED_WORD, paramString);
-					method.invoke(obj, new String(commandModel.getCommandParameter()));
+					method.invoke(obj, commandModel, commandObject);
 
 					executionMessage = commandModel.getCommandText();
 					executed 		 = true;
@@ -322,7 +215,7 @@ public class CommandInterpreterModel
 			 
 					// Call the Command method, pass a String param 
 					Method method = cls.getDeclaredMethod(commandModel.getCommandName() + RESERVED_WORD, paramString);
-					method.invoke(obj, new String(commandModel.getCommandParameter()));
+					method.invoke(obj, commandModel, commandObject);
 
 					executionMessage = commandModel.getCommandText();
 					executed 		 = true;
@@ -353,8 +246,21 @@ public class CommandInterpreterModel
 		
 	private void move(CommandModel commandModel, Object currentLocation) {
 		
-		System.out.println("Command: " + commandModel.getCommandName() + ", Command Parameter: " + commandModel.getCommandParameter());
-		//System.out.println("Current location: " + (Location)(currentLocation.getLocation().getX() + ", " + currentLocation.getLocation().getY());		
+		if (commandModel.getNumberOfParameters() > 0) {
+			
+			String[] commandParameters = commandModel.getCommandParameters();
+			
+			String message = "Command: " + commandModel.getCommandName() + "\n";
+			
+			for (int index = 0; index < commandParameters.length; index++) {
+				message = message + "Parameter: " + commandParameters[index] + "\n";
+			}
+			
+			commandModel.setCommandText(message);
+		}
+		else {
+			commandModel.setCommandText("Where would you like me to move?");
+		}	
 	}
 	
 	private void throw_reserved(String command) {

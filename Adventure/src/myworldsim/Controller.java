@@ -61,18 +61,21 @@ public class Controller {
 	 * 
 	 */
 	
-	public String executeCommand(String command, String commandParameter) {
+	public String executeCommand(CommandModel model) {
 
 		String executionMessage = "";
 		boolean executed 		= false;
 
 		// Find the command
-		CommandModel commandModel = commandInterpreterModel.findCommand(command);
-
+		// BUG: commandInterpreterModel.findCommand() remembers the command text for the previous command!
+		CommandModel commandModel = commandInterpreterModel.findCommand(model.getCommandName());
+		
 		if (commandModel.getCommandId() > 0) {
 		
 			// Execute the command
-			commandModel.setCommandParameter(commandParameter);
+			if (model.getNumberOfParameters() > 0) {
+				commandModel.setCommandParameters(model.getCommandParameters());
+			}
 			executionMessage = commandInterpreterModel.executeCommand(commandModel, currentLocation);
 			executed 		 = commandInterpreterModel.getStatus();
 		}

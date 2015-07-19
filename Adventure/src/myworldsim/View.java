@@ -83,13 +83,6 @@ public class View
 		commandTextArea.setPromptText(PROMPT);
 		commandTextArea.setOnKeyReleased(new TextAreaKeyReleasedEventHandler());
 		
-		Platform.runLater(new Runnable() {
-		     @Override
-		     public void run() {
-		    	 commandTextArea.requestFocus();
-		     }
-		});
-		
 		innerPane.getChildren().add(commandTextArea);
 
 		/*
@@ -127,14 +120,23 @@ public class View
 				// Check if the player entered a command
 				if (commandTextArea.getText().length() > 1) {
 
-					// Extract the command
-					String command = commandTextArea.getText().trim().toLowerCase();
+					// Extract the command and the command parameters
+					CommandModel commandModel = new CommandModel();
+					String[] commandWords = commandTextArea.getText().trim().toLowerCase().split("\\s+");
+					commandModel.setCommandName(commandWords[0]);
 
-					// Extract the command parameter
-					String commandParameter = "north";
-					
-					setGameLogLabel(PROMPT + command);
-					setGameLogLabel(controller.executeCommand(command, commandParameter));
+					if (commandWords.length > 1) {
+						String[] commandParameters = new String[commandWords.length - 1];
+						
+						for (int index = 0; index < commandParameters.length; index++) {
+							commandParameters[index] = commandWords[index + 1];
+						}
+						
+						commandModel.setCommandParameters(commandParameters);
+					}
+										
+					setGameLogLabel(PROMPT + commandModel.getCommandName());
+					setGameLogLabel(controller.executeCommand(commandModel));
 					
 					commandSaveArea = commandTextArea.getText();
 					commandTextArea.setText("");

@@ -21,7 +21,8 @@ public class CommandModel implements Comparable<CommandModel> {
 	protected Date		date_last_updated;
 	protected boolean	active;
 
-	private String		commandParameter;
+	private int			numberOfParameters;
+	private String[]	commandParameters;
 	
 	/*
 	 * Class Constants
@@ -98,12 +99,17 @@ public class CommandModel implements Comparable<CommandModel> {
 		this.active = active;
 	}
 
-	public String getCommandParameter() {
-		return commandParameter;
+	public int getNumberOfParameters() {
+		return numberOfParameters;
 	}
 	
-	public void setCommandParameter(String parameter) {
-		commandParameter = parameter;
+	public String[] getCommandParameters() {
+		return commandParameters;
+	}
+	
+	public void setCommandParameters(String[] parameters) {
+		commandParameters 	= parameters;
+		numberOfParameters	= parameters.length;
 	}
 	
 	/*
@@ -120,14 +126,23 @@ public class CommandModel implements Comparable<CommandModel> {
 		this.date_added 			= new Date(0);
 		this.date_last_updated		= new Date(0);
 		this.active 				= false;
+		this.commandParameters 		= new String[1];	// Array will be replaced by the caller of setCommandParameters()
+		
+		for (int index = 0; index < commandParameters.length; index++) {
+			commandParameters[index] = "";
+		}
+		
+		numberOfParameters 			 = 0;
 	}
 	
-	public CommandModel(int commandId, String commandName, int primaryCommandId, String primaryCommandName, String commandText, Date dateAdded, Date dateLastUpdated, boolean active) {
+	public CommandModel(int commandId, String commandName, int primaryCommandId, String primaryCommandName, String commandText, String[] commandParameters, Date dateAdded, Date dateLastUpdated, boolean active) {
 		this.command_id				= commandId;
 		this.command_name 			= commandName;
 		this.primary_command_id		= primaryCommandId;
 		this.primary_command_name	= primaryCommandName;
 		this.command_text 			= commandText;
+		this.commandParameters		= commandParameters;
+		numberOfParameters			= commandParameters.length;
 		this.date_added 			= dateAdded;
 		this.date_last_updated		= dateLastUpdated;
 		this.active 				= active;
